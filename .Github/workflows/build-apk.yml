@@ -1,0 +1,16 @@
+name: Preparar APK Android
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Mostrar archivos del proyecto
+        run: |
+          echo "Repositorio descargado correctamente"
+          find . -maxdepth 3 -type f
