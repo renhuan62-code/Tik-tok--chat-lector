@@ -1,0 +1,11 @@
+name: Preparar APK Android
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+      - name: Listar contenido del ZIP
+        run: unzip -l TikTokChatLector_proyecto.zip
