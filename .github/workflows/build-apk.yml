@@ -1,11 +1,25 @@
 name: Preparar APK Android
 on:
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Descargar repositorio
         uses: actions/checkout@v4
-      - name: Listar contenido del ZIP
-        run: unzip -l TikTokChatLector_proyecto.zip
+      - name: Extraer ZIP
+        run: |
+          unzip -o TikTokChatLector_proyecto.zip -d extraido
+          rsync -a --exclude='.github' extraido/TikTokChatLector/ ./
+          rm -rf extraido
+      - name: Guardar archivos en el repositorio
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Extraer proyecto del ZIP" || echo "Nada que guardar"
+          git push
+      - name: Listar archivos
+        run: find . -path ./.git -prune -o -type f -print
