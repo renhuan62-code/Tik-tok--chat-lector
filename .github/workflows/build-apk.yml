@@ -1,25 +1,25 @@
 name: Preparar APK Android
 on:
   workflow_dispatch:
-permissions:
-  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Descargar repositorio
         uses: actions/checkout@v4
-      - name: Extraer ZIP
-        run: |
-          unzip -o TikTokChatLector_proyecto.zip -d extraido
-          rsync -a --exclude='.github' extraido/TikTokChatLector/ ./
-          rm -rf extraido
-      - name: Guardar archivos en el repositorio
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@users.noreply.github.com"
-          git add -A
-          git commit -m "Extraer proyecto del ZIP" || echo "Nada que guardar"
-          git push
-      - name: Listar archivos
-        run: find . -path ./.git -prune -o -type f -print
+      - name: Instalar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Instalar Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.7
+      - name: Compilar APK
+        run: gradle assembleDebug --stacktrace
+      - name: Subir APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: TikTokChatLector-APK
+          path: app/build/outputs/apk/debug/*.apk
