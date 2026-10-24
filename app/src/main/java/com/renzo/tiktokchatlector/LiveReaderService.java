@@ -144,6 +144,10 @@ public class LiveReaderService extends Service implements TextToSpeech.OnInitLis
             Class<?> callbackType = method.getParameterTypes()[0];
             if (!callbackType.isInterface()) continue;
             Object proxy = Proxy.newProxyInstance(callbackType.getClassLoader(), new Class<?>[]{callbackType}, (p, m, args) -> {
+                String mn = m.getName();
+                if (mn.equals("hashCode")) return System.identityHashCode(p);
+                if (mn.equals("equals")) return args != null && args.length == 1 && p == args[0];
+                if (mn.equals("toString")) return "TikTokCallbackProxy";
                 if (args != null && args.length >= 2) callback.call(args[0], args[1]);
                 return null;
             });
