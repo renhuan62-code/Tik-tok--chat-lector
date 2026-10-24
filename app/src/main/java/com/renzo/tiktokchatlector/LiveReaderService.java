@@ -114,7 +114,7 @@ public class LiveReaderService extends Service implements TextToSpeech.OnInitLis
             } catch (Throwable e) {
                 Throwable root = e.getCause() != null ? e.getCause() : e;
                 Log.e(TAG, "TikTok connection failed", root);
-                broadcastStatus("No se pudo conectar: " + root.getClass().getSimpleName() + ". Comprueba el usuario y que el LIVE esté activo.");
+                broadcastStatus("No se pudo conectar: " + root.getClass().getSimpleName() + " - " + root.getMessage());
                 updateNotification("No se pudo conectar");
             }
         }, "TikTokLive-Connect");
