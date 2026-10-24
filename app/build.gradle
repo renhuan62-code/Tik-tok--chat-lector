@@ -1,0 +1,25 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.renzo.tiktokchatlector'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.renzo.tiktokchatlector'
+        minSdk 26
+        targetSdk 35
+        versionCode 3
+        versionName '0.3-alpha'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'com.github.jwdeveloper.TikTok-Live-Java:Client:1.13.0-Release'
+}
